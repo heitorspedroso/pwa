@@ -1,4 +1,4 @@
-var CACHE_NAME = 'my-site-cache-v5';
+var CACHE_NAME = 'my-site-cache-v6';
 var urlsToCache = [
     '/pwa/css/style.css',
     '/pwa/index.html',
@@ -62,7 +62,7 @@ self.addEventListener('fetch', function(event) {
 
 self.addEventListener('activate', function(event) {
 
-    var cacheAllowlist = ['my-site-cache-v5'];
+    var cacheAllowlist = ['my-site-cache-v6'];
 
     console.log('activate')
 

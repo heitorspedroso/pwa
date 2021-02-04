@@ -1,6 +1,9 @@
 var CACHE_NAME = 'my-site-cache-v1';
 var urlsToCache = [
     '/pwa/css/style.css',
+    '/pwa/index.html',
+    '/pwa/page.html',
+    '/pwa/register.js',
 ];
 
 self.addEventListener('install', function(event) {

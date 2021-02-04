@@ -1,7 +1,7 @@
 this.addEventListener('install', function(event) {
     console.log('install' , event)
     event.waitUntil(
-        caches.open('v4').then(function(cache) {
+        caches.open('v5').then(function(cache) {
             return cache.addAll([
                 '/pwa/',
                 '/pwa/index.html',
@@ -19,7 +19,7 @@ this.addEventListener('fetch', function(event) {
     event.respondWith(
         caches.match(event.request).then(function(resp) {
             return resp || fetch(event.request).then(function(response) {
-                return caches.open('v4').then(function(cache) {
+                return caches.open('v5').then(function(cache) {
                     cache.put(event.request, response.clone());
                     return response;
                 });
@@ -29,13 +29,13 @@ this.addEventListener('fetch', function(event) {
 });
 
 this.addEventListener('activate', function(event) {
-    var cacheWhitelist = ['v4'];
+    var cacheWhitelist = ['v5'];
     console.log('activate',event)
     event.waitUntil(
         caches.keys().then(function(keyList) {
             return Promise.all(keyList.map(function(key) {
                 if (cacheWhitelist.indexOf(key) === -1) {
-                    console.log('Delete cache', cacheName);
+                    console.log('Delete cache', cacheWhitelist);
                     return caches.delete(key);
                 }
             }));

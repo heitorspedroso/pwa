@@ -10,3 +10,10 @@ this.addEventListener('install', function(event) {
         })
     );
 });
+
+this.addEventListener('fetch', function(event) {
+    console.log('[SW] fetch ' + event.request.url)
+    event.respondWith(
+        caches.match(event.request)
+    );
+});

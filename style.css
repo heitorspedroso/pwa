@@ -1,3 +1,6 @@
-body{
+body.home{
     background: #c6c6c6;
+}
+body.page{
+    background: red;
 }

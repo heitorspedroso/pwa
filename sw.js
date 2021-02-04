@@ -1,7 +1,7 @@
 this.addEventListener('install', function(event) {
+    console.log('install' , event)
     event.waitUntil(
         caches.open('v3').then(function(cache) {
-            console.log('install');
             return cache.addAll([
                 '/pwa/',
                 '/pwa/index.html',
@@ -14,7 +14,7 @@ this.addEventListener('install', function(event) {
 });
 
 this.addEventListener('fetch', function(event) {
-    console.log('[SW] fetch ' + event.request.url)
+    console.log('fetch ' + event.request.url)
     event.respondWith(
         caches.match(event.request).then(function(resp) {
             return resp || fetch(event.request).then(function(response) {
@@ -23,6 +23,20 @@ this.addEventListener('fetch', function(event) {
                     return response;
                 });
             });
+        })
+    );
+});
+
+this.addEventListener('activate', function(event) {
+    var cacheWhitelist = ['v3'];
+    console.log('activate',event)
+    event.waitUntil(
+        caches.keys().then(function(keyList) {
+            return Promise.all(keyList.map(function(key) {
+                if (cacheWhitelist.indexOf(key) === -1) {
+                    return caches.delete(key);
+                }
+            }));
         })
     );
 });

@@ -15,6 +15,21 @@ self.addEventListener('install', function(event) {
             })
     );
 });
+//
+// this.addEventListener('install', function(event) {
+//     console.log('install' , event)
+//     event.waitUntil(
+//         caches.open('v1').then(function(cache) {
+//             return cache.addAll([
+//                 'index.html',
+//                 'page.html',
+//                 'sw.js',
+//                 'register.js',
+//                 'style.css',
+//             ]);
+//         })
+//     );
+// });
 
 // this.addEventListener('fetch', function(event) {
 //     console.log('fetch ' + event.request.url)

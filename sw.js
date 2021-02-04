@@ -5,7 +5,7 @@ this.addEventListener('install', function(event) {
             return cache.addAll([
                 '/pwa/',
                 '/pwa/index.html',
-                '/pwa/sw.js',
+                '/pwa/register.js',
             ]);
         })
     );

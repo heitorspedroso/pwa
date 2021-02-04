@@ -6,6 +6,7 @@ this.addEventListener('install', function(event) {
                 '/pwa/',
                 '/pwa/index.html',
                 '/pwa/sw.js',
+                '/pwa/register.js',
             ]);
         })
     );

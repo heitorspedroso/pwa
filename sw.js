@@ -1,4 +1,4 @@
-var CACHE_NAME = 'my-site-cache-v1';
+var CACHE_NAME = 'my-site-cache-v2';
 var urlsToCache = [
     '/pwa/css/style.css',
     '/pwa/index.html',
@@ -60,18 +60,19 @@ self.addEventListener('fetch', function(event) {
     );
 });
 
-//
-// this.addEventListener('activate', function(event) {
-//     var cacheWhitelist = ['v1'];
-//     console.log('activate',event)
-//     event.waitUntil(
-//         caches.keys().then(function(keyList) {
-//             return Promise.all(keyList.map(function(key) {
-//                 if (cacheWhitelist.indexOf(key) === -1) {
-//                     console.log('Delete cache', key);
-//                     return caches.delete(key);
-//                 }
-//             }));
-//         })
-//     );
-// });
+self.addEventListener('activate', function(event) {
+
+    var cacheAllowlist = ['my-site-cache-v2'];
+
+    event.waitUntil(
+        caches.keys().then(function(cacheNames) {
+            return Promise.all(
+                cacheNames.map(function(cacheName) {
+                    if (cacheAllowlist.indexOf(cacheName) === -1) {
+                        return caches.delete(cacheName);
+                    }
+                })
+            );
+        })
+    );
+});

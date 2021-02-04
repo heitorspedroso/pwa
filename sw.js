@@ -1,7 +1,7 @@
 this.addEventListener('install', function(event) {
     console.log('install' , event)
     event.waitUntil(
-        caches.open('v7').then(function(cache) {
+        caches.open('v8').then(function(cache) {
             return cache.addAll([
                 '/pwa/',
                 '/pwa/index.html',
@@ -19,7 +19,7 @@ this.addEventListener('fetch', function(event) {
     event.respondWith(
         caches.match(event.request).then(function(resp) {
             return resp || fetch(event.request).then(function(response) {
-                return caches.open('v7').then(function(cache) {
+                return caches.open('v8').then(function(cache) {
                     cache.put(event.request, response.clone());
                     return response;
                 });

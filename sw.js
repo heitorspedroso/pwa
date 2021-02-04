@@ -64,6 +64,8 @@ self.addEventListener('activate', function(event) {
 
     var cacheAllowlist = ['my-site-cache-v2'];
 
+    console.log('activate ' + event.request.url)
+
     event.waitUntil(
         caches.keys().then(function(cacheNames) {
             return Promise.all(

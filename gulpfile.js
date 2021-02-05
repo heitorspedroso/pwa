@@ -8,7 +8,7 @@ gulp.task('service-worker', function () {
         globPatterns: [
             '*.{html,json,js,css}',
         ],
-        swDest: 'sw.js',
+        swDest: 'build/sw.js',
     });
 });
 

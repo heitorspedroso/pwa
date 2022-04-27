@@ -1,28 +1,41 @@
 
-let cacheVersion = 1
-let cacheName = "web-workr-cache-"+cacheVersion
-const pageToSave = "offline.html"
 
-// Installing service worker
-this.addEventListener('install', event => {
-    console.log("Installing service worker");
+var CACHE_NAME = 'cachacaria-v1';
 
-    event.waitUntil(caches.open(cacheName)
-        .then((openCache) => {
-            return openCache.add(pageToSave)
-        })
-        .catch(err => console.log(err)))
-})
-
-
-this.addEventListener('fetch', event => {
-    console.log("Fetching with service worker");
-    if(event.request.mode === 'navigate'){
-        event.respondWith(
-            fetch(event.request.url)
-                .catch(_ => {
-                    return caches.match(pageToSave)
+self.addEventListener('activate', function(event) {
+    console.log('[SW] Activate');
+    event.waitUntil(
+        caches.keys().then(function(cacheNames) {
+            return Promise.all(
+                cacheNames.map(function(cacheName) {
+                    if (CACHE_NAME.indexOf(cacheName) == -1) {
+                        console.log('[SW] Delete cache:', cacheName);
+                        return caches.delete(cacheName);
+                    }
                 })
-        )
-    }
-})
+            );
+        })
+    );
+});
+
+self.addEventListener('install', function(event){
+    console.log('[SW] Install');
+    event.waitUntil(
+        caches.open(CACHE_NAME).then(function(cache) {
+            return Promise.all(
+                files.map(function(file){
+                    return cache.add(file);
+                })
+            );
+        })
+    );
+});
+
+self.addEventListener('fetch', function(event) {
+    console.log('[SW] fetch ' + event.request.url)
+    event.respondWith(
+        caches.match(event.request).then(function(response){
+            return response || fetch(event.request.clone());
+        })
+    );
+});

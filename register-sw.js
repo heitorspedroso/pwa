@@ -4,3 +4,7 @@ window.addEventListener('load', () => {
         .then(_ => console.log('Registered service worker'))
         .catch(e => console.log('Error registering: ',err));
 });
+
+window.addEventListener('online', () => {
+    window.location.reload();
+});

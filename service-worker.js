@@ -15,5 +15,11 @@ this.addEventListener('fetch', event => {
     console.log("Fetching with service worker");
     if(event.request.mode === 'navigate'){
         console.log(event.request);
+        event.respondWith(
+            fetch(event.request.url)
+                .catch(_ => {
+                    console.log("Catch request url");
+                })
+        )
     }
 })

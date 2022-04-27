@@ -1,14 +1,14 @@
-let cacheVersion = 1
-let cacheName = "web-workr-cache-"+cacheVersion
-const pageToSave = "offline.html"
+const CACHE_NAME = 'cachacaria-v1';
+const OFFLINE_URL = 'offline.html';
 
 this.addEventListener('install', event => {
-    console.log("Installing service worker");
-    event.waitUntil(caches.open(cacheName)
-        .then((openCache) => {
-            return openCache.add(pageToSave)
-        })
-        .catch(err => console.log(err)))
+    event.waitUntil(
+        (async () => {
+            const cache = await caches.open(CACHE_NAME);
+            await cache.add(new Request(OFFLINE_URL, { cache: "reload" }));
+        })()
+    );
+    self.skipWaiting();
 })
 
 this.addEventListener('activate', event => {
@@ -17,13 +17,11 @@ this.addEventListener('activate', event => {
 
 
 this.addEventListener('fetch', event => {
-    console.log("Fetching with service worker");
     if(event.request.mode === 'navigate'){
-        console.log(event.request);
         event.respondWith(
             fetch(event.request.url)
                 .catch(_ => {
-                    console.log("Catch request url");
+                    return caches.match(OFFLINE_URL);
                 })
         )
     }

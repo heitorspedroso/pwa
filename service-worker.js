@@ -5,24 +5,41 @@ this.addEventListener('install', event => {
     event.waitUntil(
         (async () => {
             const cache = await caches.open(CACHE_NAME);
-            await cache.add(new Request(OFFLINE_URL, { cache: "reload" }));
+            await cache.add(OFFLINE_URL);
         })()
     );
     self.skipWaiting();
 })
 
 this.addEventListener('activate', event => {
-    console.log("Activate service worker");
+    event.waitUntil(
+        (async () => {
+            if ("navigationPreload" in self.registration) {
+                await self.registration.navigationPreload.enable();
+            }
+        })()
+    );
+    self.clients.claim();
 })
 
 
 this.addEventListener('fetch', event => {
-    if(event.request.mode === 'navigate'){
+    if (event.request.mode === "navigate") {
         event.respondWith(
-            fetch(event.request.url)
-                .catch(_ => {
-                    return caches.match(OFFLINE_URL);
-                })
-        )
+            (async () => {
+                try {
+                    const preloadResponse = await event.preloadResponse;
+                    if (preloadResponse) {
+                        return preloadResponse;
+                    }
+                    const networkResponse = await fetch(event.request);
+                    return networkResponse;
+                } catch (error) {
+                    const cache = await caches.open(CACHE_NAME);
+                    const cachedResponse = await cache.match(OFFLINE_URL);
+                    return cachedResponse;
+                }
+            })()
+        );
     }
 })

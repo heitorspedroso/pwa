@@ -1,5 +1,3 @@
-
-
 var CACHE_NAME = 'cachacaria-v1';
 // dev only
 if (typeof files == 'undefined') {

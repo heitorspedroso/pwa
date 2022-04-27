@@ -4,6 +4,11 @@ const pageToSave = "offline.html"
 
 this.addEventListener('install', event => {
     console.log("Installing service worker");
+    event.waitUntil(caches.open(cacheName)
+        .then((openCache) => {
+            return openCache.add(pageToSave)
+        })
+        .catch(err => console.log(err)))
 })
 
 this.addEventListener('activate', event => {

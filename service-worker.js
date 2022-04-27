@@ -1,6 +1,13 @@
 
 
 var CACHE_NAME = 'cachacaria-v1';
+// dev only
+if (typeof files == 'undefined') {
+    var files = [];
+} else {
+    files.push('./');
+}
+
 
 self.addEventListener('activate', function(event) {
     console.log('[SW] Activate');

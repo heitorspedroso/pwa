@@ -1,23 +1,11 @@
 {
-  "name": "Cachaçaria Nacional",
+  "name": "My PWA",
   "display": "standalone",
-  "start_url": "/",
-  "id": "/",
+  "start_url": "/pwa",
+  "id": "/pwa",
   "short_name": "CN",
   "theme_color": "#3a0b0c",
-  "description": "Cachaças das Principais Regiões Produtoras de Cachaças Artesanais do Brasil! Maior loja de Cachaças. Entrega Garantida. Compre em 6X SEM JUROS. Mais de 1000 rótulos.",
+  "description": "Description",
   "orientation": "any",
-  "background_color": "#ffffff",
-  "icons": [
-    {
-      "src": "https://cachacarianacional.vteximg.com.br/arquivos/android-chrome-512x512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    },
-    {
-      "src": "https://cachacarianacional.vteximg.com.br/arquivos/android-chrome-192x192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    }
-  ]
+  "background_color": "#ffffff"
 }
